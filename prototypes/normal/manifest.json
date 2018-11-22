@@ -11,6 +11,8 @@
 
   "git_url": "https://github.com/YourRepo/YourService",
 
+  "upgrade_branch": "master",
+
   "implementation_api": false,
 
   "LibraryAPI": true,

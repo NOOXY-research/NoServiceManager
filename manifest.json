@@ -52,6 +52,6 @@
     "git_sources": {
       "github": "https://github.com/",
       "gitlab": "https://gitlab.com/"
-    },
+    }
   }
 }
