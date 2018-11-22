@@ -4,6 +4,7 @@
 // Copyright 2018 NOOXY. All Rights Reserved.
 
 var fs = require('fs');
+const { exec } = require('child_process');
 // Service entry point
 function Service(Me, api) {
   // Your service entry point
@@ -21,13 +22,64 @@ function Service(Me, api) {
   let settings = Me.Settings;
   let isWin = require('os').platform().indexOf('win') > -1;
   let where = isWin ? 'where' : 'whereis';
+  let services_path = __dirname.split('/'+Me.Manifest.name)[0];
   let dependencies_level_stack = [];
 
-  let checkupdate = (callback)=> {
+  let is_init_directory = (dir, callback)=> {
+    exec('cd '+dir+'/.git' , (err, stdout, stderr) => {
+      if (err) {
+        callback(false ,false);
+      }
+      else {
+        callback(false, true);
+      }
+    });
+  };
 
+  let init_directory = (dir, giturl, callback)=> {
+    exec('chmod +x '+__dirname+'/scripts/unix_git_init.sh' , (err, stdout, stderr) => {
+      if (err) {
+        callback(err);
+      }
+      else {
+        exec(__dirname+'/scripts/unix_git_init.sh '+dir+' '+giturl, (err, stdout, stderr) => {
+          callback(err);
+        });
+      }
+    });
+  };
+
+  let pull_directory = (dir, callback)=> {
+    exec('chmod +x '+__dirname+'/scripts/unix_git_pull.sh' , (err, stdout, stderr) => {
+      if (err) {
+        callback(err);
+      }
+      else {
+        exec(__dirname+'/scripts/unix_git_pull.sh '+dir, (err, stdout, stderr) => {
+          callback(err);
+        });
+      }
+    });
   };
 
   this.start = ()=> {
+    is_init_directory(services_path+'/test', (err, boo)=> {
+      if(!boo) {
+        init_directory(services_path+'/test', 'https://github.com/NOOXY-research/NoShell', (err)=> {
+          console.log(err);
+          pull_directory(services_path+'/test', (err)=> {
+            console.log(err);
+          });
+        });
+      }
+      else {
+        pull_directory(services_path+'/test', (err)=> {
+          console.log(err);
+        });
+      }
+    });
+
+    console.log(services_path);
     // initializing and launching services
     let launch_other_services = ()=> {
       api.Daemon.getSettings((err, dsettings)=> {
