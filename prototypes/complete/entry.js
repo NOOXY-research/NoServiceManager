@@ -4,6 +4,8 @@
 // Copyright 2018 NOOXY. All Rights Reserved.
 'use strict';
 
+let {{ servicename }} = new (require('./{{ servicename }}'))()
+
 function Service(Me, API) {
   // Initialize your service here synchronous. Do not use async here!
 
@@ -19,6 +21,11 @@ function Service(Me, API) {
   // Your settings in manifest file.
   let settings = Me.Settings;
 
+  // import API to {{ servicename }} module
+  {{ servicename }}.importModel(API.Database.Model);
+  {{ servicename }}.importLibrary(API.Database.Library);
+  {{ servicename }}.importSettings(settings);
+
   // Here is where your service start
   this.start = ()=> {
     // Access another service on this daemon
@@ -29,13 +36,16 @@ function Service(Me, API) {
     // JSONfunction is a function that can be defined, which others entities can call.
     // It is a NOOXY Service Framework Standard
     ss.def('JSONfunction', (json, entityID, returnJSON)=> {
-      // Code here for JSONfunciton
-      // Return Value for JSONfunction call. Otherwise remote will not recieve funciton return value.
-      let json_be_returned = {
-        d: 'Hello! NOOXY Service Framework!'
-      }
-      // First parameter for error, next is JSON to be returned.
-      returnJSON(false, json_be_returned);
+      {{ servicename }}.whateverfunction((err, msg)=> {
+        // Code here for JSONfunciton
+        // Return Value for JSONfunction call. Otherwise remote will not recieve funciton return value.
+        let json_be_returned = {
+          d: 'Hello! NOOXY Service Framework!',
+          msg: msg
+        }
+        // First parameter for error, next is JSON to be returned.
+        returnJSON(false, json_be_returned);
+      });
     });
 
     // Safe define a JSONfunction.
