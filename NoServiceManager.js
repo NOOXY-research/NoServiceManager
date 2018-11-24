@@ -415,7 +415,7 @@ function NoServiceManager() {
       Utils.UnixCmd.initGitDir(services_path+'/'+service_name, service_bind_repo_status[service_name].git_url, Settings.repo_name, callback);
     }
     else {
-      callback(new Error('Service "'+service_name+'" has no giturl setting.'));
+      callback();
     }
   };
 
