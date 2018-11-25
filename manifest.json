@@ -1,0 +1,61 @@
+{
+  "name": "NoServiceManager",
+
+  "version": "0.0.3",
+
+  "displayname": "NoService manager",
+
+  "description": "Providing ablilty to create, manipulate or modify NoService Services.",
+
+  "git_url": "https://github.com/NOOXY-Research/NoServiceManager",
+
+  "LibraryAPI": true,
+
+  "DatabaseAPI": true,
+
+  "Authors": [
+    "noowyee",
+     "NOOXY"
+  ],
+
+  "implementation_api": false,
+
+  "dependencies": {
+
+    "node_packages" : {
+    },
+
+    "services" : {
+    }
+
+  },
+
+  "JSONfunciton_prototypes": {
+    "createService": {
+      "displayname": "Create service.",
+      "description": "Create a service by default template.",
+      "secure": true,
+      "protocol": {
+        "JSON_call": {
+          "name": "Service's name."
+        },
+        "JSON_return": {
+          "s": "Status."
+        }
+      }
+    }
+  },
+
+  "settings": {
+    "check_memory_interval_sec": 300,
+    "max_memory_per_service_MB": 2048,
+    "reach_memory_limit_relaunch": true,
+    "startup_auto_upgrade": true,
+    "upgrade_branch": "master",
+    "repo_name": "origin",
+    "git_sources": {
+      "github": "https://github.com/",
+      "gitlab": "https://gitlab.com/"
+    }
+  }
+}
