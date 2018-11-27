@@ -99,13 +99,18 @@ function NoServiceManager() {
             let dependencies = manifests[service_name].dependencies;
             // check node
             if(dependencies) {
+              let err = false;
               for(let package in dependencies.node_packages) {
                 try {
                   require.resolve(package);
                 } catch (e) {
                   console.log('Please install package "'+package+'" for service "'+service_name+'".');
-                  Daemon.close();
+                  err = true;
                 }
+              }
+              if(err) {
+                Daemon.close();
+                return 0;
               }
               for(let service in dependencies.services) {
                 let require_version = dependencies.services[service];
