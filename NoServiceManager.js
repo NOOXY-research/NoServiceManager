@@ -28,11 +28,6 @@ function NoServiceManager() {
     Model = model;
   };
 
-  // import model from API in entry.js
-  this.importModel = (model)=> {
-    Model = model;
-  };
-
   // import library from API in entry.js
   this.importLibrary = (library)=> {
     Library = library;
