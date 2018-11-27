@@ -52,7 +52,7 @@ function Service(Me, API) {
           s: "succeess"
         };
         if(err)
-          jsonr.s = err;
+          jsonr.s = err.toString();
 
         returnJSON(false, jsonr);
       });
@@ -143,7 +143,7 @@ function Service(Me, API) {
     });
 
     NoServiceManager.launchOtherServices(()=> {
-      
+
     });
   }
 
