@@ -308,6 +308,25 @@ function NoServiceManager() {
 
           let manifest = JSON.parse(fs.readFileSync(commons_path+'manifest.json', 'utf8'));
           manifest.name = service_name;
+          if(type == "complete") {
+            manifest.JSONfunciton_prototypes['JSONfunciton1'] = {
+              "displayname": "JSONfunction",
+              "description": "JSONfunction description.",
+              "secure": true,
+              "protocol": {
+                "JSON_call": {
+                  "a": "return a related stuff."
+                },
+                "JSON_return": {
+                  "c": "return c related stuff.",
+                  "d": {
+                    "e": "return c related stuff."
+                  }
+                }
+              }
+            }
+          }
+
           fs.writeFileSync(services_path+service_name+'/manifest.json', JSON.stringify(manifest, null, 2));
 
           fs.readdirSync(prototype_path).forEach(file => {
