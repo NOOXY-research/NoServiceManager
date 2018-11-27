@@ -260,6 +260,11 @@ function NoServiceManager() {
               else {
                 if(callback)
                   callback(false);
+                // add back
+                (dependencies_level_stack[0])[dsettings.master_service]={version: manifests[dsettings.master_service].version};
+                // add back
+                if(dsettings.debug_service)
+                  (dependencies_level_stack[0])[dsettings.debug_service]={version: manifests[dsettings.debug_service].version};
                 Utils.TagLog('service', Me.Manifest.name+' have launched your services successfully');
                 console.log('\n');
               }
