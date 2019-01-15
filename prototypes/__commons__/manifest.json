@@ -30,10 +30,10 @@
     }
   },
 
-  "socketfunctions": {
+  "servicefunctions": {
     "jfunc1": {
-      "displayname": "Tester JSONfunciton 1",
-      "description": "JSONfunciton description.",
+      "displayname": "servicefunction 1",
+      "description": "ServiceFunciton description.",
       "secure": false,
       "protocol": {
         "call": {

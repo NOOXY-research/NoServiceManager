@@ -30,7 +30,7 @@
 
   },
 
-  "socketfunctions": {
+  "servicefunctions": {
     "createService": {
       "displayname": "Create service.",
       "description": "Create a service by default template.",
