@@ -26,7 +26,7 @@ function {{ servicename }}(Me, NoService) {
   };
 
   this.launch = (callback)=> {
-    NoService.Library.Runtime.BatchSetupModel(NoService.Database.Model, models_dict, (err, models)=> {
+    NoService.Database.Model.doBatchSetup(models_dict, (err, models)=> {
       _models = models;
       if(callback)
         callback(err);
