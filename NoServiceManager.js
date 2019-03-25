@@ -360,7 +360,7 @@ function NoServiceManager() {
 
   this.upgradeService = (service_name, callback)=> {
     if(service_bind_repo_status[service_name]?service_bind_repo_status[service_name].init:false) {
-      Utils.UnixCmd.pullGitDir(services_path+service_name, Settings.repo_name, Settings.upgrade_branch, callback);
+      Utils.UnixCmd.pullGitDir(services_path+'/'+service_name, Settings.repo_name, Settings.upgrade_branch, callback);
     }
     else {
       callback(new Error('Service git of "'+service_name+'" uninitialized.'));
