@@ -56,7 +56,7 @@ function NoServiceManager() {
           if(manifest.git_url) {
             service_bind_repo_status[servicedir].git_url = manifest.git_url;
           }
-          service_bind_repo_status[servicedir].init = Utils.UnixCmd.isDirGitInitedSync(services_path+servicedir);
+          service_bind_repo_status[servicedir].init = Utils.UnixCmd.isDirGitInitedSync(services_path+'/'+servicedir);
           // resolve end
         }
       }
