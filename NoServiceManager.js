@@ -69,7 +69,7 @@ function NoServiceManager() {
   // define you own funciton to be called in entry.js
   this.launchOtherServices = (callback)=> {
     Daemon.getSettings((err, dsettings)=> {
-      services_path = dsettings.services_path;
+      services_path = dsettings.service.services_path;
       this.loadServiceBindRepoStatus();
       let launch = (err)=> {
         if(err) {
@@ -107,7 +107,7 @@ function NoServiceManager() {
                 let require_version = dependencies.services[service];
                 if(manifests[service]) {
                   let actual_version = manifests[service].version;
-                  if(Utils.compareVersion(actual_version, require_version)>=0||!dsettings.master_config.check_service_version) {
+                  if(Utils.compareVersion(actual_version, require_version)>=0||!dsettings.service.master_service_conf.check_service_version) {
 
                   }
                   else {
@@ -185,9 +185,9 @@ function NoServiceManager() {
           // launch services by dependencies level
           // remove launched
           // remove myself
-          delete (dependencies_level_stack[0])[dsettings.master_service];
+          delete (dependencies_level_stack[0])[dsettings.service.master_service];
           // remove debug
-          delete (dependencies_level_stack[0])[dsettings.debug_service];
+          delete (dependencies_level_stack[0])[dsettings.service.debug_service];
           // start launching
           let init_from_level = (level, callback)=> {
             let left = Object.keys(dependencies_level_stack[level]).length;
@@ -215,7 +215,7 @@ function NoServiceManager() {
 
           init_from_level(0, (err)=> {
             if(err) {
-              Utils.TagLog('*ERR*', '****** An error occured on initializing service. Closeing... ******');
+              Utils.TagLog('*ERR*', '****** An error occured on initializing service. Closing... ******');
               console.log(err);
               Daemon.close();
             }
@@ -245,7 +245,7 @@ function NoServiceManager() {
             }
             launch_from_level(0, (err)=> {
               if(err) {
-                Utils.TagLog('*ERR*', '****** An error occured on lauching service. Closeing...  ******');
+                Utils.TagLog('*ERR*', '****** An error occured on lauching service. Closing...  ******');
                 console.log(err);
                 Daemon.close();
               }
@@ -253,10 +253,10 @@ function NoServiceManager() {
                 if(callback)
                   callback(false);
                 // add back
-                (dependencies_level_stack[0])[dsettings.master_service]={version: manifests[dsettings.master_service].version};
+                (dependencies_level_stack[0])[dsettings.service.master_service]={version: manifests[dsettings.service.master_service].version};
                 // add back
-                if(dsettings.debug_service)
-                  (dependencies_level_stack[0])[dsettings.debug_service]={version: manifests[dsettings.debug_service].version};
+                if(dsettings.service.debug_service)
+                  (dependencies_level_stack[0])[dsettings.service.debug_service]={version: manifests[dsettings.service.debug_service].version};
                 Utils.TagLog('service', Me.Manifest.name+' have launched your services successfully');
                 console.log('\n');
               }
